@@ -1,5 +1,5 @@
 /**
- * lodash 3.1.4 (Custom Build) <https://lodash.com/>
+ * lodash 3.1.5 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
  * Copyright jQuery Foundation and other contributors <https://jquery.org/>
  * Released under MIT license <https://lodash.com/license>
@@ -33,20 +33,6 @@ var reIsUint = /^(?:0|[1-9]\d*)$/;
 
 /** Built-in method references without a dependency on `root`. */
 var freeParseInt = parseInt;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return value > -1 && value % 1 == 0 && value < length;
-}
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -136,6 +122,21 @@ function createRange(fromRight) {
  * @returns {*} Returns the "length" value.
  */
 var getLength = baseProperty('length');
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
 
 /**
  * Checks if the given arguments are from an iteratee call.
@@ -426,6 +427,7 @@ function toNumber(value) {
  * @param {number} end The end of the range.
  * @param {number} [step=1] The value to increment or decrement by.
  * @returns {Array} Returns the new array of numbers.
+ * @see _.inRange, _.rangeRight
  * @example
  *
  * _.range(4);
